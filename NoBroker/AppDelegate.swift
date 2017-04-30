@@ -12,10 +12,17 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    lazy var nbGlobalInstance:NBGlobalInstanceProtocol = {
+        let instance = NBGlobalObject.init(attributes: nil)
+        Thread.main.threadDictionary.setValue(instance, forKey: "globalInstance")
+        return instance
+    }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        self.window = UIWindow.init(frame: UIScreen.main.bounds)
+        window?.rootViewController = UINavigationController.init(rootViewController: PropertlyListViewController.init(globalInstancePara: nbGlobalInstance))
+        window?.makeKeyAndVisible()
         return true
     }
 

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="67"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rY5-jy-5jV">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="67"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="piO-ef-Dig">
+                            <rect key="frame" x="0.0" y="0.0" width="295" height="67"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qrY-TH-5OG">
+                                    <rect key="frame" x="8" y="8" width="287" height="26"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KAI-2m-3Mh">
+                                    <rect key="frame" x="8" y="42" width="279" height="17"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="qrY-TH-5OG" firstAttribute="top" secondItem="piO-ef-Dig" secondAttribute="top" constant="8" id="14w-kf-zU4"/>
+                                <constraint firstAttribute="trailing" secondItem="qrY-TH-5OG" secondAttribute="trailing" id="LI2-Gf-GW9"/>
+                                <constraint firstAttribute="bottom" secondItem="KAI-2m-3Mh" secondAttribute="bottom" constant="8" id="dFr-Ya-bMw"/>
+                                <constraint firstItem="KAI-2m-3Mh" firstAttribute="leading" secondItem="piO-ef-Dig" secondAttribute="leading" constant="8" id="dvJ-SZ-8FT"/>
+                                <constraint firstAttribute="trailing" secondItem="KAI-2m-3Mh" secondAttribute="trailing" constant="8" id="gUc-y2-hbv"/>
+                                <constraint firstItem="qrY-TH-5OG" firstAttribute="leading" secondItem="piO-ef-Dig" secondAttribute="leading" constant="8" id="rDs-1V-QEV"/>
+                                <constraint firstItem="KAI-2m-3Mh" firstAttribute="top" secondItem="qrY-TH-5OG" secondAttribute="bottom" constant="8" id="yBS-DG-tUy"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T4b-gg-llo">
+                            <rect key="frame" x="295" y="0.0" width="40" height="67"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" identifier="widthConstraint" id="jD5-3i-B2O"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mIG-LP-tsk">
+                            <rect key="frame" x="335" y="0.0" width="40" height="67"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" identifier="widthConstraint" id="cMX-8o-ENY"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="mIG-LP-tsk" firstAttribute="top" secondItem="rY5-jy-5jV" secondAttribute="top" id="42s-aP-Ybq"/>
+                        <constraint firstAttribute="bottom" secondItem="mIG-LP-tsk" secondAttribute="bottom" id="ICL-wP-foS"/>
+                        <constraint firstAttribute="bottom" secondItem="T4b-gg-llo" secondAttribute="bottom" id="YcH-Tq-g3o"/>
+                        <constraint firstAttribute="bottom" secondItem="piO-ef-Dig" secondAttribute="bottom" id="a8t-pR-qlS"/>
+                        <constraint firstItem="piO-ef-Dig" firstAttribute="top" secondItem="rY5-jy-5jV" secondAttribute="top" id="dL5-25-XBB"/>
+                        <constraint firstItem="mIG-LP-tsk" firstAttribute="leading" secondItem="T4b-gg-llo" secondAttribute="trailing" id="eU2-VC-EF3"/>
+                        <constraint firstAttribute="trailing" secondItem="mIG-LP-tsk" secondAttribute="trailing" id="iPl-o6-V8W"/>
+                        <constraint firstItem="T4b-gg-llo" firstAttribute="top" secondItem="rY5-jy-5jV" secondAttribute="top" id="sF2-pQ-ugd"/>
+                        <constraint firstItem="T4b-gg-llo" firstAttribute="leading" secondItem="piO-ef-Dig" secondAttribute="trailing" id="y1f-Wl-EfE"/>
+                        <constraint firstItem="piO-ef-Dig" firstAttribute="leading" secondItem="rY5-jy-5jV" secondAttribute="leading" id="yfI-c6-V0k"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="rY5-jy-5jV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="BoQ-Ei-vDf"/>
+                <constraint firstAttribute="bottom" secondItem="rY5-jy-5jV" secondAttribute="bottom" id="L20-w7-EWv"/>
+                <constraint firstAttribute="trailing" secondItem="rY5-jy-5jV" secondAttribute="trailing" id="WEt-3e-EYg"/>
+                <constraint firstItem="rY5-jy-5jV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="haa-iJ-Jdc"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-33.5" y="-501.5"/>
+        </view>
+    </objects>
+</document>
