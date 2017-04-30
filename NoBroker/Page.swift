@@ -20,22 +20,27 @@ struct Page{
     var currentCount:Int = 0
     var totalCount:Int = 0
     init() {
-        _no = -1
+        _no = 0
     }
     
     mutating func processError(error:Error){
         status = PagingStatus.NOT_PAGING
     }
     mutating func processCount(resultCount:Int?){
+        if resultCount! < 21{
+            print("dd")
+        }
         guard let resultantCount = resultCount else{processError(error: NSError()); return}
         if status == PagingStatus.LAST_PAGE{
             return
         }
+        
         currentCount += resultantCount
-        if currentCount >= totalCount{
+        if resultantCount == 0{
             status = PagingStatus.LAST_PAGE
             return
         }
+        
         status = PagingStatus.NOT_PAGING
         
     }

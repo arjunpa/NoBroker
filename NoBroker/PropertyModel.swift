@@ -51,6 +51,44 @@ class PropertyResultWrapper:NSObject, Mappable{
     }
 }
 
+class PropertyPhoto:NSObject, Mappable{
+    var thumbnailImageKey:String?
+    var mediumImageKey:String?
+    var originalImageKey:String?
+    var largeImageKey:String?
+    let transform = TransformOf<String,String>.init(fromJSON: { (keyd:String?) -> String? in
+        guard let key = keyd else{return nil}
+        let separated:[String] = key.components(separatedBy: "_")
+        if separated.count < 3{
+            return nil
+        }
+        return separated.first! + "/" + separated.joined(separator: "_")
+        
+    }) { (keyd:String?) -> String? in
+        guard let key = keyd else{return nil}
+        let separated:[String] = key.components(separatedBy: "/")
+        if separated.count > 2{
+            return separated[1]
+        }
+        return nil
+    }
+    required init?(map: Map) {
+        
+    }
+    public override init() {
+        super.init()
+    }
+    func mapping(map: Map) {
+        thumbnailImageKey <- (map["imagesMap.thumbnail"],transform)
+        mediumImageKey <- (map["imagesMap.medium"], transform)
+        originalImageKey <- (map["imagesMap.original"], transform)
+        largeImageKey <- (map["imagesMap.large"], transform)
+    }
+    
+    
+
+}
+
 class PropertyModel:NSObject,Mappable{
 
     var propertyDescription:String?
@@ -60,6 +98,8 @@ class PropertyModel:NSObject,Mappable{
     var street:String?
     var locality:String?
     var furnishing:Furnishing?
+    var photos:[PropertyPhoto] = []
+    var propertySize:Int?
     public override init() {
         super.init()
     }
@@ -75,5 +115,7 @@ class PropertyModel:NSObject,Mappable{
         street <- map["street"]
         locality <- map["locality"]
         furnishing <- (map["furnishing"], EnumTransform<Furnishing>())
+        photos <- map["photos"]
+        propertySize <- map["propertySize"]
     }
 }

@@ -18,9 +18,14 @@ class PropertyListPager: NSObject {
     typealias COMPLETION = ([PropertyModel]?, Error?) -> ()
     var page:Page
     var completion:COMPLETION?
-    init(nbObject:NBGlobalInstanceProtocol, serviceConstants:ServiceProtocol.Type = MockService.self) {
+    init(nbObject:NBGlobalInstanceProtocol, serviceConstants:ServiceProtocol.Type? = nil) {
         _nbObject = nbObject
-        serviceType = serviceConstants
+        if let serviceNotNil = serviceConstants{
+            serviceType = serviceNotNil
+        }
+        else{
+          serviceType = nbObject.mockService
+        }
         page = Page.init()
         super.init()
     }

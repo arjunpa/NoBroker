@@ -33,16 +33,22 @@ class PropertlyListViewController: BaseViewController {
     
     override func loadView() {
         view = UIView.init(frame: UIScreen.main.bounds)
-        setupCollectionView()
         self.automaticallyAdjustsScrollViewInsets = false
     }
     
+    func registerNibs(){
+        let nib = UINib.init(nibName: "PropertyListCell", bundle: nil)
+        self.collection_view.register(nib, forCellWithReuseIdentifier: "PropertyListCell")
+    }
+    
     func setupCollectionView(){
+        self.collection_view.dataSource = self
+        self.collection_view.delegate = self
         self.view.addSubview(collection_view)
-        self.collection_view.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor, constant: 0)
-        self.collection_view.bottomAnchor.constraint(equalTo: self.bottomLayoutGuide.topAnchor, constant: 0)
-        self.collection_view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0)
-        self.collection_view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0)
+        self.collection_view.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        self.collection_view.bottomAnchor.constraint(equalTo: self.bottomLayoutGuide.topAnchor, constant: 0).isActive = true
+        self.collection_view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
+        self.collection_view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
     }
     
     override func setupData(){
@@ -55,13 +61,15 @@ class PropertlyListViewController: BaseViewController {
                 return
             }
             guard let propertiesNotNil = propertiesPara else{return}
-            strongSelf.properties = propertiesNotNil
-            
+            strongSelf.properties = strongSelf.properties + propertiesNotNil
+            self?.collection_view.reloadData()
        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupCollectionView()
+        registerNibs()
 
         // Do any additional setup after loading the view.
     }
@@ -82,4 +90,48 @@ class PropertlyListViewController: BaseViewController {
     }
     */
 
+}
+extension PropertlyListViewController:UICollectionViewDataSource{
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.properties.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let propertyListCell = collection_view.dequeueReusableCell(withReuseIdentifier: "PropertyListCell", for: indexPath) as! PropertyListCell
+        propertyListCell.setNeedsUpdateConstraints()
+        propertyListCell.updateConstraintsIfNeeded()
+        propertyListCell.setNeedsLayout()
+        propertyListCell.layoutIfNeeded()
+        propertyListCell.configure(dataPara: properties[indexPath.item])
+        return propertyListCell
+    }
+}
+
+extension PropertlyListViewController:UICollectionViewDelegate{
+    
+}
+
+extension PropertlyListViewController:UIScrollViewDelegate{
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let distance = scrollView.contentSize.height - (targetContentOffset.pointee.y + scrollView.bounds.height)
+        if distance < 200 {
+          self.pager.pageNext()
+        }
+    }
+
+}
+
+extension PropertlyListViewController:UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let propertyItem = properties[indexPath.item]
+        let size = PropertyListCell.sizeThatFits(data: propertyItem, targetWidthd: UIScreen.main.bounds.width)
+        return size
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(5, 5, 5, 5)
+    }
 }

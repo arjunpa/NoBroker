@@ -12,18 +12,40 @@ protocol NBGlobalInstanceProtocol{
     var networkService:NetworkServiceProtocol{
         get set
     }
+    var mockService:ServiceProtocol.Type{
+        get set
+    }
+    
+    var imageManager:ImageManagerProtocol{
+        get set
+    }
+    
 }
 
 struct NBGlobalAttributes{
     var networkService:NetworkServiceProtocol?
-    
-    init(networkService:NetworkServiceProtocol?) {
+    var mockService:ServiceProtocol.Type?
+    var imageManager:ImageManagerProtocol?
+    init?(networkService:NetworkServiceProtocol?, service:ServiceProtocol.Type?, imageManagerPara:ImageManager?) {
+        if networkService == nil && service == nil{return nil}
         self.networkService = networkService
+        self.mockService = service
+        self.imageManager = imageManagerPara
     }
 }
 class NBGlobalObject:NBGlobalInstanceProtocol {
+    internal var _imageManager: ImageManagerProtocol?
+    var imageManager: ImageManagerProtocol{
+        get{
+            return _imageManager!
+        }
+        set{
+            _imageManager = newValue
+        }
+    }
   
-    internal var _networkService:NetworkServiceProtocol?
+    fileprivate var _networkService:NetworkServiceProtocol?
+    internal var _mockService:ServiceProtocol.Type?
     internal var networkService: NetworkServiceProtocol{
         get{
             return _networkService!
@@ -34,12 +56,22 @@ class NBGlobalObject:NBGlobalInstanceProtocol {
         }
     }
     
+    internal var mockService: ServiceProtocol.Type{
+        get{
+            return _mockService!
+        }
+        set{
+            _mockService = newValue
+        }
+    }
   
     
     init(attributes:NBGlobalAttributes?) {
         guard let attributesNotNil = attributes else {
             let networkServiceDefault = NBDefaultNetworkService.init()
             _networkService = networkServiceDefault
+            _mockService = MockService.self
+            _imageManager = ImageManager.init(mockService: _mockService)
             return
         }
         
@@ -50,6 +82,20 @@ class NBGlobalObject:NBGlobalInstanceProtocol {
         }
         else{
             _networkService = attributesNotNil.networkService
+        }
+        
+        if attributesNotNil.mockService == nil{
+            _mockService = MockService.self
+        }
+        else{
+            _mockService = attributesNotNil.mockService
+        }
+        
+        if attributesNotNil.imageManager == nil{
+            _imageManager = ImageManager.init(mockService: _mockService)
+        }
+        else{
+            _imageManager = attributesNotNil.imageManager
         }
     }
     
