@@ -10,8 +10,6 @@ import UIKit
 
 class PropertyListPager: NSObject {
     
-    fileprivate var _page:Int = -1
-    fileprivate var _isPaging:Bool = false
     fileprivate var _nbObject:NBGlobalInstanceProtocol
     fileprivate var serviceType:ServiceProtocol.Type
     fileprivate static let defaultParams:Dictionary<String,Any> = ["lat_lng":"12.9279232,77.6271078", "rent":"0,500000","travelTime":30]
@@ -28,6 +26,10 @@ class PropertyListPager: NSObject {
         }
         page = Page.init()
         super.init()
+    }
+    
+    func reset(){
+        page = Page()
     }
     
     func pageNext(filters:Dictionary<String,Any>? = nil){

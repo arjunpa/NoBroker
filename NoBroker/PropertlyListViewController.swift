@@ -19,6 +19,8 @@ class PropertlyListViewController: BaseViewController {
         return collection_view
     }()
     
+    var serializer:FilterParameterSerializer?
+    
      convenience init(globalInstancePara:NBGlobalInstanceProtocol?){
         self.init(nibName:nil, bundle:nil, globalInstancePara:globalInstancePara)
     }
@@ -34,6 +36,25 @@ class PropertlyListViewController: BaseViewController {
     override func loadView() {
         view = UIView.init(frame: UIScreen.main.bounds)
         self.automaticallyAdjustsScrollViewInsets = false
+    }
+    
+    func setupNavigationButtons(){
+        let filterButton = UIButton.init(type: .custom)
+        filterButton.frame = CGRect.init(x: 0, y: 0, width: 45, height: 30)
+        filterButton.setTitleColor(UIColor.blue, for: .normal)
+        filterButton.setTitle("Filter", for: .normal)
+        filterButton.addTarget(self, action: #selector(PropertlyListViewController.presentFilter), for: .touchUpInside)
+        let barButton = UIBarButtonItem.init(customView: filterButton)
+        self.navigationItem.rightBarButtonItem = barButton
+    }
+    
+    func presentFilter(){
+        let filterVC = FilterPropertyViewController.init(globalInstancePara: nil)
+        filterVC.delegate = self
+        if let serializerNotNil = self.serializer{
+            filterVC.serializer = serializerNotNil
+        }
+        self.navigationController?.pushViewController(filterVC, animated: true)
     }
     
     func registerNibs(){
@@ -52,8 +73,8 @@ class PropertlyListViewController: BaseViewController {
     }
     
     override func setupData(){
-        self.pager.pageNext()
-        
+        self.pager.pageNext(filters: self.serializer?.serialize())
+        self.pager.completion = nil
         self.pager.completion = {[weak self] propertiesPara, error in
             guard let weakSelf = self else {return}
             let strongSelf = weakSelf
@@ -70,7 +91,7 @@ class PropertlyListViewController: BaseViewController {
         super.viewDidLoad()
         setupCollectionView()
         registerNibs()
-
+        setupNavigationButtons()
         // Do any additional setup after loading the view.
     }
 
@@ -112,7 +133,7 @@ extension PropertlyListViewController:UICollectionViewDataSource{
 }
 
 extension PropertlyListViewController:UICollectionViewDelegate{
-    
+
 }
 
 extension PropertlyListViewController:UIScrollViewDelegate{
@@ -123,6 +144,17 @@ extension PropertlyListViewController:UIScrollViewDelegate{
         }
     }
 
+}
+extension PropertlyListViewController:FilterPropertyViewControllerDelegate{
+    func didFinishWithFilter(filterController: FilterPropertyViewController, serializerPara: FilterParameterSerializer) {
+        self.properties = []
+        self.collection_view.reloadData()
+        self.collection_view.layoutIfNeeded()
+        self.pager.reset()
+        self.serializer = serializerPara
+        self.setupData()
+        self.navigationController?.popViewController(animated: true)
+    }
 }
 
 extension PropertlyListViewController:UICollectionViewDelegateFlowLayout{
