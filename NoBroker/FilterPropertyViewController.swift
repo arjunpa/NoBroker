@@ -17,7 +17,7 @@ class FilterPropertyViewController: BaseViewController {
     
     var delegate:FilterPropertyViewControllerDelegate?
     var filters:[FilterSection] = []
-    var serializer:FilterParameterSerializer = FilterParameterSerializer()
+    @NSCopying var serializer:FilterParameterSerializer = FilterParameterSerializer()
     var collection_view:UICollectionView = {
         let customLayout = IGListCollectionViewLayout.init(stickyHeaders: false, topContentInset: 0, stretchToEdge: true)
         let collection_view = UICollectionView.init(frame: CGRect.zero, collectionViewLayout: customLayout)
@@ -92,7 +92,12 @@ class FilterPropertyViewController: BaseViewController {
     }
     
     func closeFilter(){
+        self.serializer.reset()
         let _ = self.navigationController?.popViewController(animated: true)
+    }
+    
+    deinit {
+        self.serializer.reset()
     }
     
     func reset(){

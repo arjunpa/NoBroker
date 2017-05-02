@@ -10,7 +10,7 @@ import UIKit
 
 
 
-class FilterParameterSerializer: NSObject {
+class FilterParameterSerializer: NSObject, NSCopying {
     fileprivate var mapping:[IndexPath:Dictionary<String,Any>] = [:]
     
     func manageSelection(indexPath:IndexPath, section:FilterSection, item:FilterSectionItem){
@@ -38,6 +38,11 @@ class FilterParameterSerializer: NSObject {
         return false
     }
     
+    init(mappingPara:[IndexPath:Dictionary<String,Any>] = [:]) {
+        self.mapping = mappingPara
+        super.init()
+    }
+    
     func serialize() -> Dictionary<String, Any>?{
         var paraDict:[String:Any] = [:]
         for (_, value) in mapping{
@@ -57,5 +62,10 @@ class FilterParameterSerializer: NSObject {
             return nil
         }
         return paraDict
+    }
+    
+    public func copy(with zone: NSZone? = nil) -> Any{
+        let copy = FilterParameterSerializer.init(mappingPara: mapping)
+        return copy
     }
 }

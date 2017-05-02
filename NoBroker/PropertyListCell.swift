@@ -199,7 +199,7 @@ class PropertyListCell: BaseCollectionCell {
 //                propertyImageView.af_setImage(withURL: imageURL)
 //
 //            }
-            imageManager.setImage(target: &propertyImageView!, url: photo.mediumImageKey!, useAbsoluteURL: false)
+            imageManager.setImage(target: propertyImageView, url: photo.mediumImageKey!, useAbsoluteURL: false)
         }
     }
     

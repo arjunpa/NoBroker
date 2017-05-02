@@ -19,7 +19,7 @@ class PropertlyListViewController: BaseViewController {
         return collection_view
     }()
     
-    var serializer:FilterParameterSerializer?
+    @NSCopying var serializer:FilterParameterSerializer?
     
      convenience init(globalInstancePara:NBGlobalInstanceProtocol?){
         self.init(nibName:nil, bundle:nil, globalInstancePara:globalInstancePara)

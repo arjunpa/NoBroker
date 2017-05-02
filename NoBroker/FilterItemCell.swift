@@ -23,7 +23,7 @@ class FilterItemCell: UICollectionViewCell {
     }
     override var isSelected:Bool {
         willSet {
-            self.selectedBackgroundView?.isHidden = false
+          //  self.selectedBackgroundView?.isHidden = false
         }
     }
     
