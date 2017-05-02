@@ -193,12 +193,13 @@ class PropertyListCell: BaseCollectionCell {
         
         if let photo = self.propertyItem.photos.first, self.propertyItem.photos.first!.mediumImageKey != nil{
          
-        //  imageManager.setImage(target: propertyImageView, url: photo.mediumImageKey!, useAbsoluteURL: false)
+        
             self.propertyImageView.image = nil
-            if let imageURL = imageManager.formatURL(url: photo.originalImageKey!, useAbsoluteURL: false){
-                propertyImageView.af_setImage(withURL: imageURL)
+//            if let imageURL = imageManager.formatURL(url: photo.originalImageKey!, useAbsoluteURL: false){
+//                propertyImageView.af_setImage(withURL: imageURL)
 //
-            }
+//            }
+            imageManager.setImage(target: &propertyImageView!, url: photo.mediumImageKey!, useAbsoluteURL: false)
         }
     }
     

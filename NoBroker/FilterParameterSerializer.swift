@@ -27,6 +27,10 @@ class FilterParameterSerializer: NSObject {
         return Array(mapping.keys)
     }
     
+    func reset(){
+        mapping.removeAll()
+    }
+    
     func isIndexPathPresent(indexPath:IndexPath) -> Bool{
         if let _ = mapping[indexPath]{
             return true

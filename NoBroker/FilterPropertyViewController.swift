@@ -39,6 +39,7 @@ class FilterPropertyViewController: BaseViewController {
         self.automaticallyAdjustsScrollViewInsets = false
         setupCollectionView()
         setupDoneBtn()
+        self.setupNavigationButtons()
     }
     
     func registerCellsAndHeaders(){
@@ -75,10 +76,33 @@ class FilterPropertyViewController: BaseViewController {
         doneButton.addTarget(self, action: #selector(FilterPropertyViewController.doneBtnClicked(sender:)), for: .touchUpInside)
     }
     
+    func setupNavigationButtons(){
+//        let filterButton = UIButton.init(type: .custom)
+//        filterButton.frame = CGRect.init(x: 0, y: 0, width: 45, height: 30)
+//        filterButton.setTitleColor(UIColor.blue, for: .normal)
+//        filterButton.setTitle("Filter", for: .normal)
+//        filterButton.addTarget(self, action: #selector(PropertlyListViewController.presentFilter), for: .touchUpInside)
+//        let barButton = UIBarButtonItem.init(customView: filterButton)
+//        self.navigationItem.rightBarButtonItem = barButton
+        let closeBtn = UIBarButtonItem.init(barButtonSystemItem: .stop, target: self, action: #selector(FilterPropertyViewController.closeFilter))
+        self.navigationItem.rightBarButtonItem = closeBtn
+        
+        let reset = UIBarButtonItem.init(barButtonSystemItem: .refresh, target: self, action: #selector(FilterPropertyViewController.reset))
+        self.navigationItem.leftBarButtonItem = reset
+    }
+    
+    func closeFilter(){
+        let _ = self.navigationController?.popViewController(animated: true)
+    }
+    
+    func reset(){
+        serializer.reset()
+        self.collection_view.reloadData()
+    }
     
     func doneBtnClicked(sender:UIButton){
-        let serializedParams = serializer.serialize()
-        print(serializedParams)
+//        let serializedParams = serializer.serialize()
+//        print(serializedParams)
         self.delegate?.didFinishWithFilter(filterController: self, serializerPara: serializer)
     }
     
