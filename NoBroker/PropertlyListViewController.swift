@@ -78,7 +78,8 @@ class PropertlyListViewController: BaseViewController {
         self.pager.completion = {[weak self] propertiesPara, error in
             guard let weakSelf = self else {return}
             let strongSelf = weakSelf
-            if let _ = error{
+            if let someError = error{
+                weakSelf.processError(error: someError)
                 return
             }
             guard let propertiesNotNil = propertiesPara else{return}
@@ -153,7 +154,7 @@ extension PropertlyListViewController:FilterPropertyViewControllerDelegate{
         self.pager.reset()
         self.serializer = serializerPara
         self.setupData()
-        self.navigationController?.popViewController(animated: true)
+        let _ = self.navigationController?.popViewController(animated: true)
     }
 }
 

@@ -45,6 +45,10 @@ class PropertyListPager: NSObject {
             let strongSelf = weakSelf
             if let someError = error{
                 strongSelf.page.processError(error: someError)
+                DispatchQueue.main.async(execute: {
+                    strongSelf.completion?(nil, error)
+                    
+                })
             }
             else{
                 

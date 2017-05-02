@@ -45,6 +45,15 @@ class BaseViewController: UIViewController {
         
     }
     
+    func processError(error:Error){
+        let alertController = UIAlertController.init(title: "Error", message: "An error occurred. Please make sure you're connected to the internet and try again", preferredStyle: .alert)
+        let tryAgainAction = UIAlertAction.init(title: "Try Again", style: .default) { (action) in
+            self.setupData()
+        }
+        alertController.addAction(tryAgainAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
 
     /*
     // MARK: - Navigation
