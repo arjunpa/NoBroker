@@ -24,7 +24,7 @@ class ImageManager: NSObject, ImageManagerProtocol{
 
     internal var _service:ServiceProtocol.Type?
     init(mockService:ServiceProtocol.Type?) {
-      //  Request.addAcceptableImageContentTypes(["image/jpg"])
+        //to fix content-type sent in server response and pass alamofire content-type validation
         DataRequest.addAcceptableImageContentTypes(["image/jpg"])
         _service = mockService
     }
@@ -40,10 +40,7 @@ class ImageManager: NSObject, ImageManagerProtocol{
     }
     
     func setImage(target: UIImageView?,url:String, useAbsoluteURL:Bool = false){
-        var urlStr = url
-//        if !useAbsoluteURL{
-//            urlStr = (_service?.imageBaseURL ?? "") + url
-//        }
+        let urlStr = url
         guard let imageURL = formatURL(url: urlStr, useAbsoluteURL: useAbsoluteURL) else{return}
         if let targetNotNil = target{
           
